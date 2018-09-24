@@ -4,7 +4,7 @@
 
 */
 
-package binance
+package binance2
 
 // Result from: GET /api/v3/account
 type Account struct {
@@ -60,7 +60,7 @@ type OrderStatus struct {
 // Result from: GET /api/v3/myTrades
 type Trade struct {
 	Id              int64   `json:"id"`
-    OrderId         int64   `json:"orderId"`
+  OrderId         int64   `json:"orderId"`
 	Price           float64 `json:"price,string"`
 	Quantity        float64 `json:"qty,string"`
 	Commission      float64 `json:"commission,string"`

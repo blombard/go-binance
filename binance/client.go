@@ -2,7 +2,7 @@
    client.go
        Wrapper for the Binance Exchange API
 */
-package binance
+package binance2
 
 import (
 	"crypto/hmac"

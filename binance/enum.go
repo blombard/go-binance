@@ -4,7 +4,7 @@
 
 */
 
-package binance
+package binance2
 
 var OrderSideEnum = map[string]bool{
 	"BUY":  true,

@@ -4,7 +4,7 @@
        Account (Signed) Endpoints for Binance Exchange API
 
 */
-package binance
+package binance2
 
 import (
 	"fmt"
@@ -18,6 +18,31 @@ func (b *Binance) GetAccountInfo() (account Account, err error) {
 	_, err = b.client.do("GET", reqUrl, "", true, &account)
 	if err != nil {
 		return
+	}
+
+	return
+}
+
+// Filter Basic Account Information To Retrieve Current Holding for an individual symbol
+func (b *Binance) GetPosition(q PositionQuery) (balance Balance, err error) {
+
+	err = q.ValidatePositionQuery()
+	if err != nil {
+		return
+	}
+
+	reqUrl := fmt.Sprintf("api/v3/account")
+	account := Account{}
+
+	_, err = b.client.do("GET", reqUrl, "", true, &account)
+	if err != nil {
+		return
+	}
+
+	for _, balance := range account.Balances {
+		if balance.Asset ==  q.Symbol {
+			return balance, nil
+		}
 	}
 
 	return
@@ -47,6 +72,7 @@ func (b *Binance) GetPositions() (positions []Balance, err error) {
 	return positions[:i], nil
 }
 
+
 // Place a Limit Order
 func (b *Binance) PlaceLimitOrder(l LimitOrder) (res PlacedOrder, err error) {
 
@@ -55,7 +81,7 @@ func (b *Binance) PlaceLimitOrder(l LimitOrder) (res PlacedOrder, err error) {
 		return
 	}
 
-	reqUrl := fmt.Sprintf("api/v3/order?symbol=%s&side=%s&type=%s&timeInForce=%s&quantity=%f&price=%.8f&recvWindow=%d", l.Symbol, l.Side, l.Type, l.TimeInForce, l.Quantity, l.Price, l.RecvWindow)
+	reqUrl := fmt.Sprintf("api/v3/order?symbol=%s&side=%s&type=%s&timeInForce=%s&quantity=%f&price=%f&recvWindow=%d", l.Symbol, l.Side, l.Type, l.TimeInForce, l.Quantity, l.Price, l.RecvWindow)
 
 	_, err = b.client.do("POST", reqUrl, "", true, &res)
 	if err != nil {
@@ -109,7 +135,7 @@ func (b *Binance) CheckOrder(query OrderQuery) (status OrderStatus, err error) {
 		return
 	}
 
-	reqUrl := fmt.Sprintf("api/v3/order?symbol=%s&orderId=%d&recvWindow=%d", query.Symbol, query.OrderId, query.RecvWindow)
+	reqUrl := fmt.Sprintf("api/v3/order?symbol=%s&orderId=%d&origClientOrderId=%s&recvWindow=%d", query.Symbol, query.OrderId, query.RecvWindow)
 
 	_, err = b.client.do("GET", reqUrl, "", true, &status)
 	if err != nil {

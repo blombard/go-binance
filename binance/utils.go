@@ -1,7 +1,7 @@
 /*
    Util Functions for Binance Api Wrapper
 */
-package binance
+package binance2
 
 import (
 	"time"

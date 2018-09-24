@@ -9,12 +9,13 @@
    To Do:
 
 */
-package binance
+package binance2
 
 //"errors"
 
 const (
 	BaseUrl = "https://api.binance.com"
+	//BaseUrl = "http://localhost:3000"
 )
 
 type Binance struct {

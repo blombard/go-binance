@@ -5,7 +5,7 @@
 
 */
 
-package binance
+package binance2
 
 import (
 	"encoding/json"
@@ -53,12 +53,14 @@ type ChangeStats struct {
 	WeightedAvgPrice   float64 `json:"weightedAvgPrice,string"`
 	PrevClosePrice     float64 `json:"prevClosePrice,string"`
 	LastPrice          float64 `json:"lastPrice,string"`
+	LastQty            float64 `json:"lastQty,string"`
 	BidPrice           float64 `json:"bidPrice,string"`
 	AskPrice           float64 `json:"askPrice,string"`
 	OpenPrice          float64 `json:"openPrice,string"`
 	HighPrice          float64 `json:"highPrice,string"`
 	LowPrice           float64 `json:"lowPrice,string"`
 	Volume             float64 `json:"volume,string"`
+	QuoteVolume        float64 `json:"quoteVolume,string"`
 	OpenTime           int64   `json:"openTime"`
 	CloseTime          int64   `json:"closeTime"`
 	FirstId            int64   `json:"firstId"`

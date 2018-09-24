@@ -4,11 +4,24 @@
 
 */
 
-package binance
+package binance2
 
 import (
 	"errors"
 )
+
+// Input for: GET api/v3/account
+type PositionQuery struct {
+	Symbol string
+}
+
+func (q *PositionQuery) ValidatePositionQuery() error {
+	if len(q.Symbol) == 0 {
+		return errors.New("Invalid or Empty Symbol")
+	} else {
+		return nil
+	}
+}
 
 // Input for: POST /api/v3/order
 type LimitOrder struct {
