@@ -83,6 +83,8 @@ func (b *Binance) PlaceLimitOrder(l LimitOrder) (res PlacedOrder, err error) {
 
 	reqUrl := fmt.Sprintf("api/v3/order?symbol=%s&side=%s&type=%s&timeInForce=%s&quantity=%.0f&recvWindow=%d", l.Symbol, l.Side, l.Type, l.TimeInForce, l.Quantity, l.RecvWindow)
 	switch l.TickSize {
+	case 0:
+		reqUrl += fmt.Sprintf("&price=%.0f", l.Price)
 	case 0.1:
 		reqUrl += fmt.Sprintf("&price=%.1f", l.Price)
 	case 0.01:

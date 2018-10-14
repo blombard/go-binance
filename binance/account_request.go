@@ -51,7 +51,8 @@ func (l *LimitOrder) ValidateLimitOrder() error {
 	case l.Price <= 0.0:
 		return errors.New("Invalid or empty order price")
 	case l.TickSize <= 0:
-		return errors.New("Invalid or empty tick size")
+		l.TickSize = 0
+		return nil
 	case l.RecvWindow == 0:
 		l.RecvWindow = 5000
 		return nil
