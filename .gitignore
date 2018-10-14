@@ -1,2 +1,6 @@
 *.swp
 .env
+
+
+/binance/examples
+/binance/tests

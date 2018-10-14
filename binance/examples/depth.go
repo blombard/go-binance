@@ -14,7 +14,7 @@ import (
     "fmt"
     "encoding/json"
     "github.com/gorilla/websocket"
-    "go-binance/binance"
+    "github.com/pdepip/go-binance/binance"
 )
 
 const (
@@ -86,7 +86,7 @@ func (o *OrderBook) Maintainer() {
                 go o.ProcessAsks(job.AskDelta)
             }
         }
-    }   
+    }
 }
 
 
@@ -105,7 +105,7 @@ func main() {
     log.Println("Dialed:", address)
 
     // Set up Order Book
-    ob := OrderBook{} 
+    ob := OrderBook{}
     ob.Bids = make(map[float64]float64, MaxDepth)
     ob.Asks = make(map[float64]float64, MaxDepth)
     ob.Updates = make(chan State, 500)
