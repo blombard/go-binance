@@ -32,6 +32,7 @@ type LimitOrder struct {
 	Quantity    float64
 	Price       float64
 	TickSize    float64
+	StepSize    float64
 	RecvWindow  int64
 }
 
@@ -51,6 +52,9 @@ func (l *LimitOrder) ValidateLimitOrder() error {
 	case l.Price <= 0.0:
 		return errors.New("Invalid or empty order price")
 	case l.TickSize <= 0:
+		l.TickSize = 0
+		return nil
+	case l.StepSize <= 0:
 		l.TickSize = 0
 		return nil
 	case l.RecvWindow == 0:

@@ -81,7 +81,7 @@ func (b *Binance) PlaceLimitOrder(l LimitOrder) (res PlacedOrder, err error) {
 		return
 	}
 
-	reqUrl := fmt.Sprintf("api/v3/order?symbol=%s&side=%s&type=%s&timeInForce=%s&quantity=%.0f&recvWindow=%d", l.Symbol, l.Side, l.Type, l.TimeInForce, l.Quantity, l.RecvWindow)
+	reqUrl := fmt.Sprintf("api/v3/order?symbol=%s&side=%s&type=%s&timeInForce=%s&recvWindow=%d", l.Symbol, l.Side, l.Type, l.TimeInForce, l.RecvWindow)
 	switch l.TickSize {
 	case 0:
 		reqUrl += fmt.Sprintf("&price=%.0f", l.Price)
@@ -101,6 +101,27 @@ func (b *Binance) PlaceLimitOrder(l LimitOrder) (res PlacedOrder, err error) {
 		reqUrl += fmt.Sprintf("&price=%.7f", l.Price)
 	case 0.00000001:
 		reqUrl += fmt.Sprintf("&price=%.8f", l.Price)
+	}
+	l.Quantity -= l.StepSize 
+	switch l.StepSize {
+	case 1:
+		reqUrl += fmt.Sprintf("&quantity=%.0f", l.Quantity)
+	case 0.1:
+		reqUrl += fmt.Sprintf("&quantity=%.1f", l.Quantity)
+	case 0.01:
+		reqUrl += fmt.Sprintf("&quantity=%.2f", l.Quantity)
+	case 0.001:
+		reqUrl += fmt.Sprintf("&quantity=%.3f", l.Quantity)
+	case 0.0001:
+		reqUrl += fmt.Sprintf("&quantity=%.4f", l.Quantity)
+	case 0.00001:
+		reqUrl += fmt.Sprintf("&quantity=%.5f", l.Quantity)
+	case 0.000001:
+		reqUrl += fmt.Sprintf("&quantity=%.6f", l.Quantity)
+	case 0.0000001:
+		reqUrl += fmt.Sprintf("&quantity=%.7f", l.Quantity)
+	case 0.00000001:
+		reqUrl += fmt.Sprintf("&quantity=%.8f", l.Quantity)
 	}
 	fmt.Println(reqUrl)
 	_, err = b.client.do("POST", reqUrl, "", true, &res)
