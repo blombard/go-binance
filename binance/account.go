@@ -102,7 +102,6 @@ func (b *Binance) PlaceLimitOrder(l LimitOrder) (res PlacedOrder, err error) {
 	case 0.00000001:
 		reqUrl += fmt.Sprintf("&price=%.8f", l.Price)
 	}
-	l.Quantity -= l.StepSize 
 	switch l.StepSize {
 	case 1:
 		reqUrl += fmt.Sprintf("&quantity=%.0f", l.Quantity)
