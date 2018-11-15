@@ -106,27 +106,25 @@ func (b *Binance) GetLastPrice(q SymbolQuery) (price TickerPrice, err error) {
 	return
 }
 
-// Best price/qty on the order book for an individual symbol.
-func (b *Binance) GetBookTicker(q SymbolQuery) (bookticker BookTicker, err error) {
-
-	var booktickers []BookTicker
-	reqUrl := "api/v1/ticker/allBookTickers"
-	_, err = b.client.do("GET", reqUrl, "", false, &booktickers)
-
-	for _, bookticker := range booktickers {
-		if q.Symbol == bookticker.Symbol {
-			return bookticker, nil
-		}
-	}
-
-	return
-}
-
 // Best price/qty on the order book for all symbols.
 func (b *Binance) GetBookTickers() (booktickers []BookTicker, err error) {
 
 	reqUrl := "api/v1/ticker/allBookTickers"
 	_, err = b.client.do("GET", reqUrl, "", false, &booktickers)
+
+	return
+}
+
+// Best price/qty on the order book for one symbol
+func (b *Binance) GetBookTicker(q SymbolQuery) (bookticker BookTicker, err error) {
+
+	err = q.ValidateSymbolQuery()
+	if err != nil {
+		return
+	}
+
+	reqUrl := fmt.Sprintf("api/v3/ticker/bookTicker?symbol=%s", q.Symbol)
+	b.client.do("GET", reqUrl, "", false, &bookticker)
 
 	return
 }
