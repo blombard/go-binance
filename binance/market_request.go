@@ -47,6 +47,7 @@ type KlineQuery struct {
 	Interval  string
 	Limit     int64
 	StartTime int64
+	EndTime 	int64
 }
 
 func (q *KlineQuery) ValidateKlineQuery() error {

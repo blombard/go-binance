@@ -48,6 +48,9 @@ func (b *Binance) GetKlines(q KlineQuery) (klines []Kline, err error) {
 	if q.StartTime != 0 {
 		reqUrl = fmt.Sprintf("%s&startTime=%d", reqUrl, q.StartTime)
 	}
+	if q.EndTime != 0 {
+		reqUrl = fmt.Sprintf("%s&endTime=%d", reqUrl, q.EndTime)
+	}
 
 	_, err = b.client.do("GET", reqUrl, "", false, &klines)
 	if err != nil {
