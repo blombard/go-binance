@@ -72,7 +72,6 @@ func (b *Binance) GetPositions() (positions []Balance, err error) {
 	return positions[:i], nil
 }
 
-
 // Place a Limit Order
 func (b *Binance) PlaceLimitOrder(l LimitOrder) (res PlacedOrder, err error) {
 

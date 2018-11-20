@@ -14,9 +14,9 @@ import (
 
 // Result from: GET /api/v1/depth
 type OrderBook struct {
-	LastUpdateId  int64   `json:"lastUpdateId"`
-	Bids          []Order `json:"bids"`
-	Asks          []Order `json:"asks"`
+	LastUpdateId int64   `json:"lastUpdateId"`
+	Bids         []Order `json:"bids"`
+	Asks         []Order `json:"asks"`
 }
 
 type Order struct {
@@ -48,6 +48,7 @@ func (o *Order) UnmarshalJSON(b []byte) error {
 
 // Result from: GET /api/v1/ticker/24hr
 type ChangeStats struct {
+	Symbol             string  `json:"symbol"`
 	PriceChange        float64 `json:"priceChange,string"`
 	PriceChangePercent float64 `json:"priceChangePercent,string"`
 	WeightedAvgPrice   float64 `json:"weightedAvgPrice,string"`
@@ -80,7 +81,7 @@ type AggTrade struct {
 	BestMatch    bool    `json:"M"`
 }
 
-// Result from: GET /api/v1/allPrices
+// Result from: GET /api/v3/ticker/price
 type TickerPrice struct {
 	Symbol string  `json:"symbol"`
 	Price  float64 `json:"price,string"`
@@ -146,6 +147,7 @@ type SymbolFilter struct {
 
 type RateLimit struct {
 	Limit         int64  `json:"limit"`
+	IntervalNum   int64  `json:"intervalNum"`
 	Interval      string `json:"interval"`
 	RateLimitType string `json:"rateLimitType"`
 }
@@ -155,6 +157,12 @@ type PingResponse struct{}
 type WithdrawalSystemStatus struct {
 	Status SystemStatus `json:"status"`
 	Msg    string       `json:"msg"`
+}
+
+// Result from: GET /api/v3/avgPrice
+type AvgPrice struct {
+	Mins  int64   `json:"mins"`
+	Price float64 `json:"price,string"`
 }
 
 type SystemStatus int64

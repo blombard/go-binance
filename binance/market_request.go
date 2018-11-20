@@ -28,7 +28,7 @@ func (q *OrderBookQuery) ValidateOrderBookQuery() error {
 	}
 }
 
-// Input for: GET /api/v1/24hr & /api/v1/aggTrades
+// Input for: GET /api/v1/24hr & /api/v1/aggTrades & /api/v3/avgPrice & /api/v3/ticker/price & /api/v3/ticker/bookTicker
 type SymbolQuery struct {
 	Symbol string
 }
@@ -47,7 +47,7 @@ type KlineQuery struct {
 	Interval  string
 	Limit     int64
 	StartTime int64
-	EndTime 	int64
+	EndTime   int64
 }
 
 func (q *KlineQuery) ValidateKlineQuery() error {
